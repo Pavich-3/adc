@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "adc",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"stdbool.h": "c"
+		}
+	}
+}
