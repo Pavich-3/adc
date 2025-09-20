@@ -4,12 +4,17 @@
 #define F_CPU 8000000UL
 
 void ADC_Init(void);
-void TIMER_Init(void);
 void PWM_Init(void);
+void TIMER_Init(void);
 
 int main(void)
 {
-  while(0);
+  ADC_Init();
+  PWM_Init();
+  TIMER_Init();
+  sei();
+
+  while(1);
 }
 
 void ADC_Init(void)
@@ -18,11 +23,13 @@ void ADC_Init(void)
   ADCSRA |= (1 << ADEN) | (1 << ADATE) | (1 << ADPS2) | (1 << ADPS1);
   ADCSRB |= (1 << ADTS1) | (1 << ADTS0);
   DIDR0 |= (1 << ADC1D);
+  ADCSRA |= (1 << ADSC);
 }
 
 void PWM_Init(void)
 {
-  TCCR1A |= (1 << COM1A1) | (1 << WGM11) | (1 < WGM10);
+  DDRB |= (1 << PB1);
+  TCCR1A |= (1 << COM1A1) | (1 << WGM11) | (1 << WGM10);
   TCCR1B |= (1 << WGM12) | (1 << CS11) | (1 << CS10);
 }
 
@@ -36,5 +43,5 @@ void TIMER_Init(void)
 
 ISR(TIMER0_COMPA_vect)
 {
-
+  OCR1A = ADCW;
 }
